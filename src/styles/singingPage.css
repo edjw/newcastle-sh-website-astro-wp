@@ -24,10 +24,7 @@ div.bottomContent {
   @apply mt-12;
 }
 
-.wp-block-heading.has-text-align-center {
-  @apply text-center;
-}
-
+.wp-block-heading.has-text-align-center,
 .wp-block-heading {
   @apply text-left sm:text-center;
 }
