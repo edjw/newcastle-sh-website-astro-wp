@@ -1,0 +1,72 @@
+---
+import "@fontsource/libre-franklin/latin.css";
+import "../styles/global.css";
+import { Image } from "@astrojs/image/components";
+import logo from "../images/newcastle_sacred_harp_logo.svg";
+import { WordpressURL } from "../../siteData";
+const { name: title, description } = await fetch(
+  `https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
+).then((res) => res.json());
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content="https://newcastlesacredharp.co.uk" />
+
+    <meta property="og:locale" content="en_GB" />
+
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+    <meta
+      property="og:image"
+      content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
+    />
+    <meta property="og:image:width" content="955" />
+    <meta property="og:image:height" content="500" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Newcastle Sacred Harp" />
+    <meta
+      name="twitter:image"
+      content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
+    />
+  </head>
+  <body
+    class="mx-auto grid min-h-[100dvh] max-w-4xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pt-4 pb-8 bg-red-50"
+  >
+    <header class="flex flex-col items-center">
+      <div class="max-w-lg">
+        <a href="/" title={title}>
+          <Image
+            src={logo}
+            alt="Newcastle Sacred Harp Logo"
+            width={1280}
+            height={500}
+          />
+        </a>
+      </div>
+      <nav>
+        <ul class="flex flex-row gap-x-4 items-center">
+          <li>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <hr />
+      <p><a href="/">Newcastle Sacred Harp</a></p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+div.wp-block-columns {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-12;
+}
+
+div.wp-block-group.homepageIntro {
+  @apply rounded-lg bg-white px-4 py-6;
+
+  & h3 {
+    @apply mt-0;
+  }
+
+  & p.subheading {
+    @apply font-normal text-gray-800 text-lg;
+  }
+
+  & div.homepageIntroAddress {
+    @apply bg-gray-200 bg-opacity-60 px-4 text-gray-800 pt-4 pb-6 rounded flex flex-col gap-y-8;
+
+    & p {
+      @apply my-0;
+    }
+  }
+}
+
+figure.homepageMap {
+  @apply flex flex-col items-center;
+  & img {
+    @apply my-0;
+  }
+
+  & figcaption > a {
+    @apply text-blue-600 no-underline hover:underline;
+  }
+}
+
+div.contactBox {
+  @apply bg-white rounded-lg px-6 py-4 flex flex-col gap-y-8;
+
+  & div.wp-block-media-text {
+    @apply flex flex-row items-center gap-x-6;
+
+    & > figure {
+      @apply shrink-0 max-w-[44px] my-0;
+    }
+
+    & > div > p {
+      @apply my-0;
+    }
+
+    & div.wp-block-media-text__content {
+      @apply flex-wrap;
+
+      & a {
+        @apply break-all text-blue-600 no-underline hover:underline;
+      }
+    }
+  }
+}

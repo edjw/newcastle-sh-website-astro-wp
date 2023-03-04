@@ -1,15 +1,20 @@
 ---
+import "../styles/homepage.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { WordpressURL } from "../../siteData";
+const WordPressPageID = "16";
+const { title, content } = await fetch(
+  `https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}/posts/${WordPressPageID}`
+).then((res) => res.json());
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <div class="flex flex-col gap-y-6 items-center">
+    <h2 class="text-3xl font-medium md:text-center">{title}</h2>
+    <section
+      class="prose min-w-full"
+      id={`page-${WordPressPageID}`}
+      set:html={content}
+    />
+  </div>
+</BaseLayout>
