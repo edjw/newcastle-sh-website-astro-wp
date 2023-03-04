@@ -4,7 +4,7 @@ import "../styles/global.css";
 import { Image } from "@astrojs/image/components";
 import logo from "../images/newcastle_sacred_harp_logo.svg";
 import { WordpressURL } from "../../siteData";
-const { name: title, description } = await fetch(
+let { name: title, description } = await fetch(
   `https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
 ).then((res) => res.json());
 ---
@@ -37,9 +37,9 @@ const { name: title, description } = await fetch(
     />
   </head>
   <body
-    class="mx-auto grid min-h-[100dvh] max-w-4xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pt-4 pb-8 bg-red-50"
+    class="container mx-auto grid min-h-[100dvh] max-w-3xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pb-8 bg-red-50"
   >
-    <header class="flex flex-col items-center">
+    <header class="flex flex-col items-center gap-y-4">
       <div class="max-w-lg">
         <a href="/" title={title}>
           <Image
@@ -50,13 +50,34 @@ const { name: title, description } = await fetch(
           />
         </a>
       </div>
-      <nav>
-        <ul class="flex flex-row gap-x-4 items-center">
-          <li>
-            <a href="/about">About</a>
+
+      <nav class="flex flex-col items-center gap-y-4">
+        <button
+          class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline"
+          >Menu</button
+        >
+        <ul
+          class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex"
+        >
+          <li
+            class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
+          >
+            <a href="/">Home</a>
           </li>
-          <li>
-            <a href="/contact">Contact</a>
+          <li
+            class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
+          >
+            <a href="/all-day">Annual All-Day</a>
+          </li>
+          <li
+            class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
+          >
+            <a href="/other-north-east-singings">Other North-East Singings</a>
+          </li>
+          <li
+            class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
+          >
+            <a href="/about-sacred-harp">About Sacred Harp</a>
           </li>
         </ul>
       </nav>
@@ -69,4 +90,16 @@ const { name: title, description } = await fetch(
       <p><a href="/">Newcastle Sacred Harp</a></p>
     </footer>
   </body>
+
+  <script is:inline>
+    const menuButton = document.querySelector("nav > button");
+    const menu = document.querySelector("nav > ul");
+    menuButton.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+      menuButton.textContent === "Menu"
+        ? (menuButton.textContent = "Close")
+        : (menuButton.textContent = "Menu");
+    });
+  </script>
 </html>
