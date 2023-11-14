@@ -3,7 +3,8 @@
 Uses Wordpress.com as a headless CMS
 
 Fetches content using the Wordpress.com API:
-https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/%24post_ID/
+<https://developer.wordpress.com/docs/api/1.1/get/sites/%24site/posts/%24post_ID/?
+https://public-api.wordpress.com/rest/v1.1/sites/$site/posts/$post_ID
 
 Builds pages using Astro (https://astro.build)
 
