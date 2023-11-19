@@ -1,10 +1,10 @@
 ---
 import "@fontsource/libre-franklin/latin.css";
-import "../styles/global.css";
+import "@/styles/global.css";
 import { Image } from "astro:assets";
 import { ViewTransitions } from "astro:transitions";
-import logo from "../images/newcastle_sacred_harp_logo.svg";
-import { WordpressURL } from "../../siteData";
+import logo from "@/images/newcastle_sacred_harp_logo.svg";
+import { WordpressURL } from "@/siteData";
 let { name: title, description } = await fetch(
 	`https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
 ).then((res) => res.json());
