@@ -10,16 +10,17 @@ let { name: title, description } = await fetch(
 ).then((res) => res.json());
 
 const currentPath = Astro.url.pathname;
+
 let navLinks = [
 	{ href: "/", text: "Weekly singing" },
 	{ href: "/all-day", text: "Annual All-Day" },
 	{ href: "/shenandoah-all-day", text: "Shenandoah All-Day" },
-	{ href: "/other-north-east-singings", text: "Other North-East Singings" },
+	{ href: "/other-north-east-singings", text: "Other Singings" },
 	{ href: "/about-sacred-harp", text: "About Sacred Harp" },
 ];
 
 function addTrailingSlashIfNeeded(path: string) {
-	if (path.endsWith("/")) {
+	if (path.endsWith("/") || import.meta.env.DEV) {
 		return path;
 	} else {
 		return path + "/";
