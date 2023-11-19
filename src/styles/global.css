@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-family: "Libre Franklin", ui-sans-serif, system-ui, -apple-system,
-      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol", "Noto Color Emoji";
-  }
+	html {
+		font-family: "Libre Franklin", ui-sans-serif, system-ui, -apple-system,
+			BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+			"Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+			"Segoe UI Symbol", "Noto Color Emoji";
+	}
 }
 
 a {
-  @apply break-words no-underline hover:underline;
+	@apply break-words no-underline hover:underline;
 }
 
 a.wp-element-button {
-  @apply text-white bg-gray-700 px-6 py-4 rounded no-underline hover:underline;
+	@apply text-white bg-gray-700 px-6 py-4 rounded no-underline hover:underline;
 }
 
 hr {
-  @apply my-0;
+	@apply my-0;
 }

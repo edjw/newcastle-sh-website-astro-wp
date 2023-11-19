@@ -1,12 +1,21 @@
 ---
 import "@fontsource/libre-franklin/latin.css";
 import "../styles/global.css";
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 import logo from "../images/newcastle_sacred_harp_logo.svg";
 import { WordpressURL } from "../../siteData";
 let { name: title, description } = await fetch(
 	`https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
 ).then((res) => res.json());
+
+const currentPath = Astro.url.pathname;
+let navLinks = [
+	{ href: "/", text: "Home" },
+	{ href: "/all-day", text: "Annual All-Day" },
+	{ href: "/shenandoah-all-day", text: "Shenandoah All-Day" },
+	{ href: "/other-north-east-singings", text: "Other North-East Singings" },
+	{ href: "/about-sacred-harp", text: "About Sacred Harp" },
+];
 ---
 
 <html lang="en">
@@ -93,37 +102,23 @@ let { name: title, description } = await fetch(
 
 			<nav class="flex flex-col items-center gap-y-4">
 				<button
-					class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline"
+					class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline select-none"
 					>Menu</button
 				>
 				<ul
 					class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex"
 				>
-					<li
-						class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
-					>
-						<a href="/">Home</a>
-					</li>
-					<li
-						class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
-					>
-						<a href="/all-day">Annual All-Day</a>
-					</li>
-					<li
-						class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
-					>
-						<a href="/shenandoah-all-day">Shenandoah All-Day</a>
-					</li>
-					<li
-						class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
-					>
-						<a href="/other-north-east-singings">Other North-East Singings</a>
-					</li>
-					<li
-						class="bg-gray-700 text-white px-5 rounded py-2 text-center min-w-[240px] md:min-w-0"
-					>
-						<a href="/about-sacred-harp">About Sacred Harp</a>
-					</li>
+					{
+						navLinks.map((link) => (
+							<li
+								class={`bg-gray-700 text-white px-5 rounded py-2 text-center ${
+									link.href === currentPath ? "hidden" : ""
+								}`}
+							>
+								<a href={link.href}>{link.text}</a>
+							</li>
+						))
+					}
 				</ul>
 			</nav>
 		</header>
