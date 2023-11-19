@@ -112,7 +112,7 @@ let navLinks = [
 						navLinks.map((link) => (
 							<li
 								class={`bg-gray-700 text-white px-5 rounded py-2 text-center ${
-									link.href === currentPath ? "hidden" : ""
+									link.href === `${currentPath}/` ? "hidden" : ""
 								}`}
 							>
 								<a href={link.href}>{link.text}</a>
