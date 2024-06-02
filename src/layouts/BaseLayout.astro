@@ -21,9 +21,8 @@ const navLinks = [
 function addTrailingSlashIfNeeded(path: string) {
 	if (path.endsWith("/") || import.meta.env.DEV) {
 		return path;
-	} else {
-		return path + "/";
 	}
+	return `${path}/`;
 }
 ---
 
