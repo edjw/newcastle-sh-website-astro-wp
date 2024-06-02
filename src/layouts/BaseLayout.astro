@@ -5,16 +5,15 @@ import { Image } from "astro:assets";
 import { ViewTransitions } from "astro:transitions";
 import logo from "@/images/newcastle_sacred_harp_logo.svg";
 import { WordpressURL } from "@/siteData";
-let { name: title, description } = await fetch(
+const { name: title, description } = await fetch(
 	`https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
 ).then((res) => res.json());
 
 const currentPath = Astro.url.pathname;
 
-let navLinks = [
+const navLinks = [
 	{ href: "/", text: "Weekly singing" },
 	{ href: "/all-day", text: "Annual All-Day" },
-	{ href: "/shenandoah-all-day", text: "Shenandoah All-Day" },
 	{ href: "/other-north-east-singings", text: "Other Singings" },
 	{ href: "/about-sacred-harp", text: "About Sacred Harp" },
 ];
