@@ -4,7 +4,9 @@ import { fetchWordpressMenuItems } from "@/utils/fetchWordpressMenuItems";
 const allMenuItems = await fetchWordpressMenuItems();
 console.log(allMenuItems);
 
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.split("/")[1];
+
+console.log("currentPath", JSON.stringify(currentPath)); // blank ("") on /,
 ---
 
 <nav class="flex flex-col items-center gap-y-4">
@@ -16,7 +18,12 @@ const currentPath = Astro.url.pathname;
     {
       allMenuItems
         .filter((item) => {
-          return `/${item.slug}` !== currentPath && item.slug !== currentPath;
+          // Special case for home page
+          if (currentPath === "" && item.slug === "/") {
+            return false; // Hide the home link on the home page
+          }
+          // Filter out the current page
+          return item.slug !== currentPath;
         })
         .map((item) => {
           if (item.slug === "/") {
