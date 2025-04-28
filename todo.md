@@ -1,2 +1,2 @@
-get webhook to build on edit
-https://newcastlesacredharp.wordpress.com/wp-admin/options-general.php?page=webhooks
+- work out how to not depend on wordpress.com site being public for images and content to work.
+    - either cloudinary etc or a parser of some kind or get it from the api somehow

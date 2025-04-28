@@ -2,6 +2,7 @@
 import { fetchWordpressMenuItems } from "@/utils/fetchWordpressMenuItems";
 
 const allMenuItems = await fetchWordpressMenuItems();
+console.log(allMenuItems);
 
 const currentPath = Astro.url.pathname;
 ---
@@ -18,11 +19,19 @@ const currentPath = Astro.url.pathname;
           return `/${item.slug}` !== currentPath && item.slug !== currentPath;
         })
         .map((item) => {
-          return (
-            <li class="bg-gray-700 text-white px-5 w-full md:w-max rounded-sm py-2 text-center">
-              <a href={`/${item.slug}`}>{item.title}</a>
-            </li>
-          );
+          if (item.slug === "/") {
+            return (
+              <li class="bg-gray-700 text-white px-5 w-full md:w-max rounded-sm py-2 text-center">
+                <a href="/">{item.title}</a>
+              </li>
+            );
+          } else {
+            return (
+              <li class="bg-gray-700 text-white px-5 w-full md:w-max rounded-sm py-2 text-center">
+                <a href={`/${item.slug}`}>{item.title}</a>
+              </li>
+            );
+          }
         })
     }
   </ul>
