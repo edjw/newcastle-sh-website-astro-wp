@@ -2,159 +2,119 @@
 import "@fontsource/libre-franklin/latin.css";
 import "@/styles/global.css";
 import { Image } from "astro:assets";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import logo from "@/images/newcastle_sacred_harp_logo.svg";
 import { WordpressURL } from "@/siteData";
 const { name: title, description } = await fetch(
-	`https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
+  `https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
 ).then((res) => res.json());
 
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-	{ href: "/", text: "Weekly singing" },
-	{ href: "/all-day", text: "Annual All-Day" },
-	{ href: "/other-north-east-singings", text: "Other Singings" },
-	{ href: "/about-sacred-harp", text: "About Sacred Harp" },
+  { href: "/", text: "Weekly singing" },
+  { href: "/all-day", text: "Annual All-Day" },
+  { href: "/other-north-east-singings", text: "Other Singings" },
+  { href: "/about-sacred-harp", text: "About Sacred Harp" },
 ];
 
 function addTrailingSlashIfNeeded(path: string) {
-	if (path.endsWith("/") || import.meta.env.DEV) {
-		return path;
-	}
-	return `${path}/`;
+  if (path.endsWith("/") || import.meta.env.DEV) {
+    return path;
+  }
+  return `${path}/`;
 }
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link
-			rel="icon"
-			type="image/svg+xml"
-			href="/favicon.svg"
-		/>
-		<meta
-			name="viewport"
-			content="width=device-width"
-		/>
-		<title>{title}</title>
-		<meta
-			name="description"
-			content={description}
-		/>
-		<meta
-			property="og:title"
-			content={title}
-		/>
-		<meta
-			property="og:url"
-			content="https://newcastlesacredharp.co.uk"
-		/>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content="https://newcastlesacredharp.co.uk" />
 
-		<meta
-			property="og:locale"
-			content="en_GB"
-		/>
+    <meta property="og:locale" content="en_GB" />
 
-		<meta
-			property="og:description"
-			content={description}
-		/>
-		<meta
-			property="og:site_name"
-			content={title}
-		/>
-		<meta
-			property="og:image"
-			content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
-		/>
-		<meta
-			property="og:image:width"
-			content="955"
-		/>
-		<meta
-			property="og:image:height"
-			content="500"
-		/>
-		<meta
-			name="twitter:card"
-			content="summary_large_image"
-		/>
-		<meta
-			property="twitter:title"
-			content="Newcastle Sacred Harp"
-		/>
-		<meta
-			name="twitter:image"
-			content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
-		/>
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+    <meta
+      property="og:image"
+      content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
+    />
+    <meta property="og:image:width" content="955" />
+    <meta property="og:image:height" content="500" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Newcastle Sacred Harp" />
+    <meta
+      name="twitter:image"
+      content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
+    />
 
-		<ViewTransitions />
-	</head>
-	<body
-		class="container mx-auto grid min-h-[100dvh] max-w-3xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pb-8 bg-red-50"
-	>
-		<header class="flex flex-col items-center gap-y-4">
-			<div class="max-w-lg">
-				<a
-					href="/"
-					title={title}
-				>
-					<Image
-						src={logo}
-						alt="Newcastle Sacred Harp Logo"
-						width={1280}
-						height={500}
-					/>
-				</a>
-			</div>
+    <ClientRouter />
+  </head>
+  <body
+    class="container mx-auto grid min-h-[100dvh] max-w-3xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pb-8 bg-red-50"
+  >
+    <header class="flex flex-col items-center gap-y-4">
+      <div class="max-w-lg">
+        <a href="/" title={title}>
+          <Image
+            src={logo}
+            alt="Newcastle Sacred Harp Logo"
+            width={1280}
+            height={500}
+          />
+        </a>
+      </div>
 
-			<nav class="flex flex-col items-center gap-y-4">
-				<button
-					class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline select-none"
-					>Menu</button
-				>
-				<ul
-					class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex"
-				>
-					{
-						navLinks.map((link) => (
-							<li
-								class={`bg-gray-700 text-white px-5  w-full md:w-max rounded py-2 text-center ${
-									addTrailingSlashIfNeeded(link.href) === currentPath
-										? "hidden"
-										: ""
-								}`}
-							>
-								<span class="hidden">{currentPath}</span>
-								<span class="hidden">{link.href}</span>
-								<a href={link.href}>{link.text}</a>
-							</li>
-						))
-					}
-				</ul>
-			</nav>
-		</header>
-		<main>
-			<slot />
-		</main>
-		<footer>
-			<hr />
-			<p><a href="/">Newcastle Sacred Harp</a></p>
-		</footer>
-		<script is:inline>
-			document.addEventListener("astro:page-load", () => {
-				const menuButton = document.querySelector("nav > button");
-				const menu = document.querySelector("nav > ul");
-				menuButton.addEventListener("click", () => {
-					menu.classList.toggle("hidden");
-					menu.classList.toggle("flex");
-					menuButton.textContent === "Menu"
-						? (menuButton.textContent = "Close")
-						: (menuButton.textContent = "Menu");
-				});
-			});
-		</script>
-	</body>
+      <nav class="flex flex-col items-center gap-y-4">
+        <button
+          class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline select-none"
+          >Menu</button
+        >
+        <ul
+          class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex"
+        >
+          {
+            navLinks.map((link) => (
+              <li
+                class={`bg-gray-700 text-white px-5  w-full md:w-max rounded py-2 text-center ${
+                  addTrailingSlashIfNeeded(link.href) === currentPath
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                <span class="hidden">{currentPath}</span>
+                <span class="hidden">{link.href}</span>
+                <a href={link.href}>{link.text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <hr />
+      <p><a href="/">Newcastle Sacred Harp</a></p>
+    </footer>
+    <script is:inline>
+      document.addEventListener("astro:page-load", () => {
+        const menuButton = document.querySelector("nav > button");
+        const menu = document.querySelector("nav > ul");
+        menuButton.addEventListener("click", () => {
+          menu.classList.toggle("hidden");
+          menu.classList.toggle("flex");
+          menuButton.textContent === "Menu"
+            ? (menuButton.textContent = "Close")
+            : (menuButton.textContent = "Menu");
+        });
+      });
+    </script>
+  </body>
 </html>
