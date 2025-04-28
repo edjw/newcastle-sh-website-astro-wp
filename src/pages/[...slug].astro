@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { slugify } from "@/utils/slugify";
+
+import { fetchAllWordpressPageIDs } from "@/utils/fetchAllWordpressPageIDs";
+import { fetchWordpressPage } from "@/utils/fetchWordpressPage";
+
+export async function getStaticPaths() {
+  const { pages } = await fetchAllWordpressPageIDs();
+
+  const paths = [];
+
+  for (const page of pages) {
+    const pageData = await fetchWordpressPage(page.ID.toString());
+
+    const slug = slugify(pageData.slug);
+
+    if (pageData.pageTemplate === "homepage") {
+      paths.push({
+        params: { slug: undefined },
+        props: { pageData },
+      });
+    } else {
+      paths.push({
+        params: { slug },
+        props: { pageData },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { pageData } = Astro.props;
+
+const { id, title, content } = pageData;
+---
+
+<BaseLayout>
+  <div class="flex flex-col gap-y-6 items-center">
+    <h2 class="text-3xl font-medium md:text-center">
+      {title}
+    </h2>
+    <section class="prose min-w-full" id={`page-${id}`} set:html={content} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import { fetchWordpressMenuItems } from "@/utils/fetchWordpressMenuItems";
+
+const allMenuItems = await fetchWordpressMenuItems();
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="flex flex-col items-center gap-y-4">
+  <button
+    class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline select-none"
+    >Menu</button
+  >
+  <ul class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex">
+    {
+      allMenuItems
+        .filter((item) => {
+          return `/${item.slug}` !== currentPath && item.slug !== currentPath;
+        })
+        .map((item) => {
+          return (
+            <li class="bg-gray-700 text-white px-5 w-full md:w-max rounded py-2 text-center">
+              <a href={item.slug}>{item.title}</a>
+            </li>
+          );
+        })
+    }
+  </ul>
+</nav>

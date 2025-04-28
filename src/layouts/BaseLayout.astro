@@ -5,26 +5,11 @@ import { Image } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import logo from "@/images/newcastle_sacred_harp_logo.svg";
 import { WORDPRESS_URL } from "astro:env/server";
+import Nav from "@/components/nav.astro";
 
 const { name: title, description } = await fetch(
   `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}`
 ).then((res) => res.json());
-
-const currentPath = Astro.url.pathname;
-
-const navLinks = [
-  { href: "/", text: "Weekly singing" },
-  { href: "/all-day", text: "Annual All-Day" },
-  { href: "/other-north-east-singings", text: "Other Singings" },
-  { href: "/about-sacred-harp", text: "About Sacred Harp" },
-];
-
-function addTrailingSlashIfNeeded(path: string) {
-  if (path.endsWith("/") || import.meta.env.DEV) {
-    return path;
-  }
-  return `${path}/`;
-}
 ---
 
 <html lang="en">
@@ -71,31 +56,7 @@ function addTrailingSlashIfNeeded(path: string) {
         </a>
       </div>
 
-      <nav class="flex flex-col items-center gap-y-4">
-        <button
-          class="md:hidden text-white bg-gray-700 px-12 py-2 rounded no-underline hover:underline select-none"
-          >Menu</button
-        >
-        <ul
-          class="hidden flex-col md:flex-row gap-x-4 items-center gap-y-4 md:flex"
-        >
-          {
-            navLinks.map((link) => (
-              <li
-                class={`bg-gray-700 text-white px-5  w-full md:w-max rounded py-2 text-center ${
-                  addTrailingSlashIfNeeded(link.href) === currentPath
-                    ? "hidden"
-                    : ""
-                }`}
-              >
-                <span class="hidden">{currentPath}</span>
-                <span class="hidden">{link.href}</span>
-                <a href={link.href}>{link.text}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
+      <Nav />
     </header>
     <main>
       <slot />

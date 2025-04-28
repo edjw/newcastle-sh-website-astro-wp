@@ -1,23 +1,16 @@
-import { getWordPressToken } from "@/utils/wordpressAuth";
+import { getAuthenticatedHeaders } from "@/utils/wordpressAuth";
 
-import { WORDPRESS_USE_AUTH, WORDPRESS_URL } from "astro:env/server";
+import { WORDPRESS_URL } from "astro:env/server";
+import { decode } from "html-entities";
 
+export const fetchWordpressPage = async (WordPressPageID: string, fields = ["ID", "title", "content", "page_template", "slug"]) => {
 
-export const fetchWordpressPage = async (WordPressPageID: string) => {
+	const headers = await getAuthenticatedHeaders();
 
-	const isPrivateContent = WORDPRESS_USE_AUTH;
-
-	let headers: HeadersInit = {};
-
-	if (isPrivateContent) {
-		const token = await getWordPressToken();
-		headers = {
-			'Authorization': `Bearer ${token}`
-		};
-	}
+	const pageID = WordPressPageID.toString();
 
 	const response = await fetch(
-		`https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}/posts/${WordPressPageID}`,
+		`https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}/posts/${pageID}?fields=${fields.join(",")}`,
 		{ headers }
 	);
 
@@ -25,10 +18,15 @@ export const fetchWordpressPage = async (WordPressPageID: string) => {
 		throw new Error(`Failed to fetch page: ${response.statusText}`);
 	}
 
-	const { title, content } = await response.json();
+	const json = await response.json();
+
+	const { id, title, content, page_template, slug } = json;
 
 	return {
-		title,
+		id,
+		title: decode(title),
 		content,
+		pageTemplate: page_template,
+		slug
 	};
 };

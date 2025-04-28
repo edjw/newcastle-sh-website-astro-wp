@@ -1,23 +1,28 @@
-import { getWordPressToken } from "@/utils/wordpressAuth";
-
+import { getAuthenticatedHeaders } from "@/utils/wordpressAuth";
 import { WORDPRESS_USE_AUTH, WORDPRESS_URL } from "astro:env/server";
 
+interface WordPressPage {
+    ID: number;
+    title: string;
+}
 
-export const fetchWordpressPage = async (WordPressPageID: string) => {
+interface WordPressRawPageResponse {
+    found: number;
+    dropdown_pages: WordPressPage[];
+}
 
-    const isPrivateContent = WORDPRESS_USE_AUTH;
+interface WordPressPageResponse {
+    pageCount: number;
+    pages: WordPressPage[];
+}
 
-    let headers: HeadersInit = {};
+export const fetchAllWordpressPageIDs = async (): Promise<WordPressPageResponse> => {
 
-    if (isPrivateContent) {
-        const token = await getWordPressToken();
-        headers = {
-            'Authorization': `Bearer ${token}`
-        };
-    }
+    const headers = await getAuthenticatedHeaders();
 
+    // The way to get pages is with the dropdown-pages endpoint for some reason.
     const response = await fetch(
-        `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}/posts`,
+        `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}/dropdown-pages`,
         { headers }
     );
 
@@ -25,10 +30,10 @@ export const fetchWordpressPage = async (WordPressPageID: string) => {
         throw new Error(`Failed to fetch page: ${response.statusText}`);
     }
 
-    const { title, content } = await response.json();
+    const { found, dropdown_pages } = await response.json() as WordPressRawPageResponse;
 
     return {
-        title,
-        content,
+        pageCount: found,
+        pages: dropdown_pages
     };
 };

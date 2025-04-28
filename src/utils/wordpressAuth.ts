@@ -1,8 +1,23 @@
 // Get the WordPress token using the client credentials flow so we can make authenticated requests to the WordPress API.
 
-import { WORDPRESS_CLIENT_ID, WORDPRESS_CLIENT_SECRET, WORDPRESS_USERNAME, WORDPRESS_PASSWORD } from "astro:env/server";
+import { WORDPRESS_USE_AUTH, WORDPRESS_CLIENT_ID, WORDPRESS_CLIENT_SECRET, WORDPRESS_USERNAME, WORDPRESS_PASSWORD } from "astro:env/server";
 
-export const getWordPressToken = async (): Promise<string> => {
+export async function getAuthenticatedHeaders() {
+    const isPrivateContent = WORDPRESS_USE_AUTH;
+
+    let headers: HeadersInit = {};
+
+    if (isPrivateContent) {
+        const token = await getWordPressToken();
+        headers = {
+            'Authorization': `Bearer ${token}`
+        };
+    }
+
+    return headers;
+}
+
+async function getWordPressToken(): Promise<string> {
     const response = await fetch('https://public-api.wordpress.com/oauth2/token', {
         method: 'POST',
         headers: {
@@ -25,3 +40,5 @@ export const getWordPressToken = async (): Promise<string> => {
 
     return data.access_token;
 };
+
+
