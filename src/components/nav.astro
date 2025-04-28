@@ -2,11 +2,8 @@
 import { fetchWordpressMenuItems } from "@/utils/fetchWordpressMenuItems";
 
 const allMenuItems = await fetchWordpressMenuItems();
-console.log(allMenuItems);
 
 const currentPath = Astro.url.pathname.split("/")[1];
-
-console.log("currentPath", JSON.stringify(currentPath)); // blank ("") on /,
 ---
 
 <nav class="flex flex-col items-center gap-y-4">

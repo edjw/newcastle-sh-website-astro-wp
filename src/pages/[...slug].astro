@@ -4,6 +4,7 @@ import { slugify } from "@/utils/slugify";
 
 import { fetchAllWordpressPageIDs } from "@/utils/fetchAllWordpressPageIDs";
 import { fetchWordpressPage } from "@/utils/fetchWordpressPage";
+import { decode } from "html-entities";
 
 export async function getStaticPaths() {
   const { pages } = await fetchAllWordpressPageIDs();
@@ -33,10 +34,12 @@ export async function getStaticPaths() {
 
 const { pageData } = Astro.props;
 
-const { title, content } = pageData;
+const { title, content, excerpt } = pageData;
+
+const cleanedExcerpt = decode(excerpt).replace("<p>", "").replace("</p>", "");
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={cleanedExcerpt}>
   <div class="flex flex-col gap-y-6 items-center">
     <h2 class="text-3xl font-medium md:text-center">
       {title}

@@ -3,7 +3,7 @@ import { getAuthenticatedHeaders } from "@/utils/wordpressAuth";
 import { WORDPRESS_URL } from "astro:env/server";
 import { decode } from "html-entities";
 
-export const fetchWordpressPage = async (WordPressPageID: string, fields = ["ID", "title", "content", "page_template", "slug"]) => {
+export const fetchWordpressPage = async (WordPressPageID: string, fields = ["ID", "title", "content", "page_template", "slug", "excerpt"]) => {
 
 	const headers = await getAuthenticatedHeaders();
 
@@ -20,13 +20,14 @@ export const fetchWordpressPage = async (WordPressPageID: string, fields = ["ID"
 
 	const json = await response.json();
 
-	const { id, title, content, page_template, slug } = json;
+	const { id, title, content, page_template, slug, excerpt } = json;
 
 	return {
 		id,
 		title: decode(title),
 		content,
 		pageTemplate: page_template,
-		slug
+		slug,
+		excerpt
 	};
 };

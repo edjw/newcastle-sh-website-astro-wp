@@ -4,12 +4,25 @@ import "@/styles/global.css";
 import { Image } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import logo from "@/images/newcastle_sacred_harp_logo.svg";
-import { WORDPRESS_URL } from "astro:env/server";
 import Nav from "@/components/nav.astro";
 
-const { name: title, description } = await fetch(
-  `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}`
-).then((res) => res.json());
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+
+const currentPath = Astro.url.pathname.split("/")[1];
+const siteTitle = "Newcastle Sacred Harp";
+
+let pageTitle = siteTitle;
+
+if (title && currentPath !== "") {
+  pageTitle = `${title} | ${siteTitle}`;
+} else {
+  pageTitle = siteTitle;
+}
 ---
 
 <html lang="en">
@@ -17,15 +30,15 @@ const { name: title, description } = await fetch(
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:url" content="https://newcastlesacredharp.co.uk" />
 
     <meta property="og:locale" content="en_GB" />
 
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content={title} />
+    <meta property="og:site_name" content={pageTitle} />
     <meta
       property="og:image"
       content="https://newcastlesacredharp.co.uk/newcastle_sacred_harp_logo_social.png"
@@ -40,8 +53,7 @@ const { name: title, description } = await fetch(
     />
 
     <ClientRouter />
-  </head>
-  <body
+  </head><body
     class="container mx-auto grid min-h-[100dvh] max-w-3xl grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-12 px-4 pb-8 bg-red-50"
   >
     <header class="flex flex-col items-center gap-y-4">
