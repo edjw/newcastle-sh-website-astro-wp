@@ -5,6 +5,10 @@ export default defineConfig({
 	integrations: [tailwind()],
 	env: {
 		schema: {
+			WORDPRESS_URL: envField.string({
+				context: "server",
+				access: "public"
+			}),
 			WORDPRESS_CLIENT_ID: envField.string({
 				context: "server",
 				access: "secret"

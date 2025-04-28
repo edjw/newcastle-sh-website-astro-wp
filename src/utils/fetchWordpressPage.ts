@@ -1,7 +1,6 @@
-import { WordpressURL } from "@/siteData";
 import { getWordPressToken } from "@/utils/wordpressAuth";
 
-import { WORDPRESS_USE_AUTH } from "astro:env/server";
+import { WORDPRESS_USE_AUTH, WORDPRESS_URL } from "astro:env/server";
 
 
 export const fetchWordpressPage = async (WordPressPageID: string) => {
@@ -18,7 +17,7 @@ export const fetchWordpressPage = async (WordPressPageID: string) => {
 	}
 
 	const response = await fetch(
-		`https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}/posts/${WordPressPageID}`,
+		`https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}/posts/${WordPressPageID}`,
 		{ headers }
 	);
 
