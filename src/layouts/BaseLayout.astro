@@ -4,9 +4,10 @@ import "@/styles/global.css";
 import { Image } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import logo from "@/images/newcastle_sacred_harp_logo.svg";
-import { WordpressURL } from "@/siteData";
+import { WORDPRESS_URL } from "astro:env/server";
+
 const { name: title, description } = await fetch(
-  `https://public-api.wordpress.com/rest/v1.1/sites/${WordpressURL}`
+  `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_URL}`
 ).then((res) => res.json());
 
 const currentPath = Astro.url.pathname;
