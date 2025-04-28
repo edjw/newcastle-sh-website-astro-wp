@@ -11,6 +11,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -21,22 +22,111 @@
 }
 
 @layer base {
-	html {
-		font-family: "Libre Franklin", ui-sans-serif, system-ui, -apple-system,
-			BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-			"Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-			"Segoe UI Symbol", "Noto Color Emoji";
-	}
+  html {
+    font-family: "Libre Franklin", ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+      "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+  }
 }
 
+/* Base Elements */
 a {
-	@apply break-words no-underline hover:underline;
+  @apply break-words no-underline hover:underline;
 }
 
 a.wp-element-button {
-	@apply text-white bg-gray-700 px-6 py-4 rounded-sm no-underline hover:underline;
+  @apply text-white bg-gray-700 px-6 py-4 rounded no-underline hover:underline;
 }
 
 hr {
-	@apply my-0;
+  @apply my-0;
+}
+
+/* Layout Components */
+div.wp-block-columns {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 mt-8;
+}
+
+div.wp-block-columns div.wp-block-column {
+  @apply rounded-lg flex flex-col gap-y-8;
+}
+
+div.wp-block-columns div.wp-block-column.wp-block-group {
+  @apply mb-12;
+}
+
+div.wp-block-columns div.wp-block-column .wp-block-heading {
+  @apply mt-0;
+}
+
+/* Homepage Intro */
+div.wp-block-group.homepageIntro {
+  @apply rounded-lg bg-white px-4 py-6;
+}
+
+div.wp-block-group.homepageIntro h3 {
+  @apply mt-0;
+}
+
+div.wp-block-group.homepageIntro p.subheading {
+  @apply font-normal text-gray-800 text-lg;
+}
+
+/* Homepage Intro Address */
+div.homepageIntroAddress {
+  @apply bg-gray-200/60 px-4 text-gray-800 pt-4 pb-6 rounded flex flex-col gap-y-8;
+}
+
+div.homepageIntroAddress p {
+  @apply my-0;
+}
+
+/* Map Component */
+figure.homepageMap {
+  @apply flex flex-col items-center;
+}
+
+figure.homepageMap img {
+  @apply my-0;
+}
+
+figure.homepageMap figcaption>a {
+  @apply text-blue-600 no-underline hover:underline;
+}
+
+/* Contact Box */
+div.contactBox {
+  @apply bg-white rounded-lg pl-6 py-4 flex flex-col gap-y-8;
+}
+
+div.contactBox div.wp-block-media-text {
+  @apply flex flex-row items-center gap-x-6;
+}
+
+div.contactBox div.wp-block-media-text>figure {
+  @apply shrink-0 max-w-[44px] my-0;
+}
+
+div.contactBox div.wp-block-media-text>div>p {
+  @apply my-0;
+}
+
+div.contactBox div.wp-block-media-text div.wp-block-media-text__content {
+  @apply flex-wrap;
+}
+
+div.contactBox div.wp-block-media-text div.wp-block-media-text__content a {
+  @apply break-all text-blue-600 no-underline hover:underline;
+}
+
+/* Bottom Content */
+div.bottomContent {
+  @apply mt-12;
+}
+
+/* Heading Alignment */
+.wp-block-heading.has-text-align-center,
+.wp-block-heading {
+  @apply text-left sm:text-center;
 }
