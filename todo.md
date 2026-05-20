@@ -1,2 +1,2 @@
 - work out how to not depend on wordpress.com site being public for images and content to work.
-    - either cloudinary etc or a parser of some kind or get it from the api somehow
+  - either cloudinary etc or a parser of some kind or get it from the api somehow
